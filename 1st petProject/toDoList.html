@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo List</title>
+    <link rel="stylesheet" href="/styles/toDoList.css">
+    <script src="/scripts/toDoList.js" defer></script>
+</head>
+<body>
+    <header class="Header">
+        <nav class="header__nav">
+            <h1 class="logo">Список задач</h1>
+            <button id="AddTaskButton" type="button">Создать новую задачу</button>
+        </nav>    
+    </header>
+    
+        <div id="modal" class="modal__inactive">
+            <form class="modals__form">
+                <label for="TaskName">Задача:</label>
+                <input id="TaskName" type="text" required>
+            
+                <label for="priority">Приоритет задачи:</label>
+                <select id="priority" required>
+                    <option value="High">Высокий</option>
+                    <option value="Medium">Средний</option>
+                    <option value="Low">Низкий</option>
+                </select>
+
+                <label for="difficulty">Сложность</label>
+                <select id="difficulty">
+                    <option value="Hard">Сложная</option>
+                    <option value="Average">Средняя</option>
+                    <option value="Easy">Лёгкая</option>
+                </select>
+
+                <button id="submitNewTask" type="submit">Подтвердить</button>
+                <button id="turnModalInactive" type="button">Отменить</button>
+            </form>
+        </div>
+    <main class="taskField">
+       <div class="taskParameters">
+            <span class="taskParameterTemplate">ID/Date of Creation</span>
+            <span class="taskParameterTemplate">Task</span>
+            <span class="taskParameterTemplate">Priority</span>
+            <span class="taskParameterTemplate">Difficulty</span>
+            <span class="taskParameterTemplate">Status</span>
+       </div>
+       <div class="taskList">
+        
+       </div>
+       
+    </main>
+
+
+    
+    
+
+</body>
+</html>

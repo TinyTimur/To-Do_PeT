@@ -1,0 +1,112 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+.header__nav {
+    display: flex;
+    height: 13vh;
+    justify-content: space-evenly;
+}
+
+.logo {
+    align-self: center;
+    margin-left: 20px;
+}
+
+/* Buttons */
+
+button {
+    background-color: rgb(189, 180, 198);
+    align-self: center;
+    height: fit-content;
+    box-sizing: border-box;
+    border: 2px solid rgb(60, 58, 58);
+    border-radius: 30px;
+    padding: 10px;
+    width: fit-content;
+}
+
+button:hover {
+    background-color: rgb(135, 130, 140);
+    cursor: pointer;
+    
+}
+
+/* Buttons */
+
+/* Modals */
+
+#modal {
+    display: flex;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal__inactive {
+    visibility: hidden;
+    opacity: 0;
+
+}
+
+.modal__active {
+    visibility: visible;
+    opacity: 1;
+    
+}
+
+.modals__form {
+    background: rgba(189, 180, 198, 0.8);
+    padding: 8px;
+    border-radius: 20px;
+    display: flex; 
+    border: 2px solid rgb(0, 0, 0);
+    flex-direction: column;
+    width: 30vw;
+    row-gap: 5px;
+    transition: opacity 0.3s ease
+}
+
+/* Modals */
+
+/* TaskField */
+
+.taskField {
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.taskParameters {
+    display: flex;
+    height: 10vh;
+    justify-content: space-between;
+}
+
+/* .taskList { 
+    display: flex;
+    height: 10vh;
+    justify-content: space-between; 
+} */
+
+
+
+.individualTaskBox {
+    display: flex;
+    justify-content: space-between;
+}
+
+.taskParameterTemplate {
+    width: 20vw;
+    border: 1px solid rgb(0, 0, 0);
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+.taskIndividualProperty {
+    width: 20vw;
+    border: 1px solid black;
+    padding: 5px;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+}

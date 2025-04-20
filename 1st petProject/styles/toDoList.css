@@ -105,8 +105,10 @@ button:hover {
 
 .taskIndividualProperty {
     width: 20vw;
+    max-width: 20vw;
     border: 1px solid black;
     padding: 5px;
     box-sizing: border-box;
     overflow-wrap: break-word;
+    overflow: hidden;
 }

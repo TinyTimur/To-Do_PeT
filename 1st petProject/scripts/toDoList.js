@@ -21,35 +21,68 @@ const deleteAllTaskButtonElement = document.querySelector('#removeAllTasks')
 
 // Функция рендеринга таска на страницу
 
-const renderNewTaskToTaskList = () => {
-    console.log(tasksAsObjectArray[tasksAsObjectArray.length -1])
-    let individualTask = document.createElement('div')
-    individualTask.className = 'individualTaskBox'
-    taskListElement.appendChild(individualTask)
-    Object.values(tasksAsObjectArray[tasksAsObjectArray.length - 1]).forEach((value) => {
-        console.log(value)
-        let taskPropertyElement = document.createElement('span')
-        taskPropertyElement.className = 'taskIndividualProperty'
-        taskPropertyElement.textContent = value
-        individualTask.appendChild(taskPropertyElement)
-    })
+// const renderNewTaskToTaskList = () => {
+//     console.log(tasksAsObjectArray[tasksAsObjectArray.length -1])
+//     let individualTask = document.createElement('div')
+//     individualTask.className = 'individualTaskBox'
+//     taskListElement.appendChild(individualTask)
+//     Object.values(tasksAsObjectArray[tasksAsObjectArray.length - 1]).forEach((value) => {
+//         console.log(value)
+//         let taskPropertyElement = document.createElement('span')
+//         taskPropertyElement.className = 'taskIndividualProperty'
+//         taskPropertyElement.textContent = value
+//         individualTask.appendChild(taskPropertyElement)
+//     })
     
+// }
+
+
+const renderNewTaskToTaskList = () => {
+    let individualTaskElement = document.createElement('div')
+    individualTaskElement.className = 'individualTaskBox'
+    taskListElement.appendChild(individualTaskElement)
+    let task = tasksAsObjectArray[tasksAsObjectArray.length - 1]
+
+    const idPropertyOfTask = document.createElement('span')
+    idPropertyOfTask.textContent = task.id
+    idPropertyOfTask.className = 'taskIndividualProperty'
+
+    const taskPropertyOfTask = document.createElement('span')
+    taskPropertyOfTask.textContent = task.task
+    taskPropertyOfTask.className = 'taskIndividualProperty'
+
+    const priorityPropertyOfTask = document.createElement('span')
+    priorityPropertyOfTask.textContent = task.priority
+    priorityPropertyOfTask.className = 'taskIndividualProperty'
+
+    const difficultyPropertyOfTask = document.createElement('span')
+    difficultyPropertyOfTask.textContent = task.difficulty
+    difficultyPropertyOfTask.className = 'taskIndividualProperty'
+
+    const boxForStatusCheckbox = document.createElement('div')
+    boxForStatusCheckbox.className = 'taskIndividualProperty'
+
+    const statusPropertyOfTask = document.createElement('input')
+    statusPropertyOfTask.type = 'checkbox'
+    statusPropertyOfTask.className = 'taskIndividualProperty'
+
+    individualTaskElement.appendChild(idPropertyOfTask)
+    individualTaskElement.appendChild(taskPropertyOfTask)
+    individualTaskElement.appendChild(priorityPropertyOfTask)
+    individualTaskElement.appendChild(difficultyPropertyOfTask)
+    individualTaskElement.appendChild(boxForStatusCheckbox)
+    boxForStatusCheckbox.appendChild(statusPropertyOfTask)
+
 }
 
 // Переключение модалки
 
-const turnModalWindowInactive = () => {
-    modalWindow.classList.replace('modal__active', 'modal__inactive')
+const toggleModalWindow = () => {
+    modalWindow.classList.toggle('modal__active')
+    modalWindow.classList.toggle('modal__inactive')
 }
 
-const expandModalWindowForm = () => {
-    if (modalWindow.classList.contains('modal__inactive')) {
-         modalWindow.classList.replace('modal__inactive', 'modal__active')
-    }  else if (modalWindow.classList.contains('modal__active')) {
-        modalWindow.classList.replace('modal__active', 'modal__inactive')
-    }
-     
-}
+
     
 // Задаем класс для задачи
 
@@ -75,19 +108,19 @@ const saveArrayIntoLocalStorage = () => {
 
 const submitNewTaskForArray = () => {
     event.preventDefault()
-    const TaskName = document.querySelector('#TaskName')
-    const priority = document.querySelector('#priority')
-    const difficulty = document.querySelector('#difficulty')
+    const TaskInputName = document.querySelector('#TaskName')
+    const priorityInput = document.querySelector('#priority')
+    const difficultyInput = document.querySelector('#difficulty')
     const newTask = new Task(
-        TaskName.value,
-        priority.value,
-        difficulty.value,
+        TaskInputName.value,
+        priorityInput.value,
+        difficultyInput.value,
         
     )
     
-    if (TaskName.value === '') {
+    if (TaskInputName.value === '') {
         alert('Заполните все поля')
-    } else {tasksAsObjectArray.push(newTask)
+    } else {tasksAsObjectArray.push(newTask)                // dependant on renderNewTaskToTaskList
         renderNewTaskToTaskList()
         modalWindow.classList.replace('modal__active', 'modal__inactive')
         console.log(tasksAsObjectArray)
@@ -102,7 +135,7 @@ const submitNewTaskForArray = () => {
 // очистка страницы от тасок из прошлой сессии 
 
 const clearTasksFromPage = () => {
-    taskListElement.innerHTML = ''
+    
 }
 
 // рендер тасок на страницу из локального хранилища
@@ -111,22 +144,47 @@ const renderTasksOnPageFromLocalStorage = () => {
     clearTasksFromPage()
     let parsedTasksFromLocalStorage = JSON.parse(localStorage.getItem('tasks')) || []
     parsedTasksFromLocalStorage.forEach((task) => {
-        let individualTask = document.createElement('div')
-        individualTask.className = 'individualTaskBox'
-        taskListElement.appendChild(individualTask)
-        Object.values(task).forEach((value) => {
-            let taskPropertyElement = document.createElement('span')
-            taskPropertyElement.className = 'taskIndividualProperty'
-            taskPropertyElement.textContent = value
-            individualTask.appendChild(taskPropertyElement)
-        })
+        let individualTaskElement = document.createElement('div')
+        individualTaskElement.className = 'individualTaskBox'
+        taskListElement.appendChild(individualTaskElement)
+
+        const idPropertyOfTask = document.createElement('span')
+        idPropertyOfTask.textContent = task.id
+        idPropertyOfTask.className = 'taskIndividualProperty'
+
+        const taskPropertyOfTask = document.createElement('span')
+        taskPropertyOfTask.textContent = task.task
+        taskPropertyOfTask.className = 'taskIndividualProperty'
+
+        const priorityPropertyOfTask = document.createElement('span')
+        priorityPropertyOfTask.textContent = task.priority
+        priorityPropertyOfTask.className = 'taskIndividualProperty'
+
+        const difficultyPropertyOfTask = document.createElement('span')
+        difficultyPropertyOfTask.textContent = task.difficulty
+        difficultyPropertyOfTask.className = 'taskIndividualProperty'
+
+        const boxForStatusCheckbox = document.createElement('div')
+        boxForStatusCheckbox.className = 'taskIndividualProperty'
+
+        const statusPropertyOfTask = document.createElement('input')
+        statusPropertyOfTask.type = 'checkbox'
+        statusPropertyOfTask.className = 'taskIndividualProperty'
+
+        individualTaskElement.appendChild(idPropertyOfTask)
+        individualTaskElement.appendChild(taskPropertyOfTask)
+        individualTaskElement.appendChild(priorityPropertyOfTask)
+        individualTaskElement.appendChild(difficultyPropertyOfTask)
+        individualTaskElement.appendChild(boxForStatusCheckbox)
+        boxForStatusCheckbox.appendChild(statusPropertyOfTask)
         
     })
     
 }
  
 const removeAllTasks = () => {
-    localStorage.clear()
+    localStorage.clear('tasks')
+    taskListElement.innerHTML = ''
 }
 
 // функции и классы выше
@@ -135,12 +193,11 @@ const removeAllTasks = () => {
 
 submitNewTaskElement.addEventListener('click', submitNewTaskForArray)
 
-cancelButtonElement.addEventListener('click', turnModalWindowInactive)
+cancelButtonElement.addEventListener('click', toggleModalWindow)
 
-buttonElement.addEventListener('click', expandModalWindowForm)
+buttonElement.addEventListener('click', toggleModalWindow)
 
 deleteAllTaskButtonElement.addEventListener('click', removeAllTasks)
-deleteAllTaskButtonElement.addEventListener('click', clearTasksFromPage)
 
 // EventListeners Выше
 

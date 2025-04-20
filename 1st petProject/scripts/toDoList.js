@@ -14,6 +14,8 @@ const taskFieldElement = document.querySelector('.taskField')
 
 const taskListElement = document.querySelector('.taskList')
 
+const deleteAllTaskButtonElement = document.querySelector('#removeAllTasks')
+
 
 // Константы выше
 
@@ -122,6 +124,10 @@ const renderTasksOnPageFromLocalStorage = () => {
     })
     
 }
+ 
+const removeAllTasks = () => {
+    localStorage.clear()
+}
 
 // функции и классы выше
 
@@ -132,6 +138,9 @@ submitNewTaskElement.addEventListener('click', submitNewTaskForArray)
 cancelButtonElement.addEventListener('click', turnModalWindowInactive)
 
 buttonElement.addEventListener('click', expandModalWindowForm)
+
+deleteAllTaskButtonElement.addEventListener('click', removeAllTasks)
+deleteAllTaskButtonElement.addEventListener('click', clearTasksFromPage)
 
 // EventListeners Выше
 

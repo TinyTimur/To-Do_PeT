@@ -49,7 +49,14 @@
        <div class="taskList">
         
        </div>
-       <button id="removeAllTasks">Удалить все задачи</button>
+       <button class="deleteAllTasksButton" id="removeAllTasks">Удалить все задачи</button>
+       <div id="deleteModal" class="modal inactive">
+        <div class="modal-content">
+            <p>Вы действительно хотите удалить все задачи?</p>
+            <button id="confirmDelete">Да</button>
+            <button id="cancelDelete">Нет</button>
+        </div>
+    </div>
        
     </main>
 

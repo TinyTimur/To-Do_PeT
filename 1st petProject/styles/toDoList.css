@@ -112,3 +112,25 @@ button:hover {
     overflow-wrap: break-word;
     overflow: hidden;
 }
+
+.inactive {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    display: none;
+}
+.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background-color: rgb(201, 178, 222);
+    border: 1px solid black;
+    border-radius: 20px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+}

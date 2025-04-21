@@ -6,7 +6,7 @@ const cancelButtonElement = document.querySelector('#turnModalInactive')
 
 const submitNewTaskElement = document.querySelector('#submitNewTask')
 
-const tasksAsObjectArray = JSON.parse(localStorage.getItem('tasks')) || []
+let tasksAsObjectArray = JSON.parse(localStorage.getItem('tasks')) || []
 
 const formElement = document.querySelector('form')
 
@@ -16,10 +16,12 @@ const taskListElement = document.querySelector('.taskList')
 
 const deleteAllTaskButtonElement = document.querySelector('#removeAllTasks')
 
+const confirmDeleteAllTasksButtonElement = document.querySelector('#confirmDelete')
+
 
 // Константы выше
 
-// Функция рендеринга таска на страницу
+// старая Функция рендеринга таска на страницу
 
 // const renderNewTaskToTaskList = () => {
 //     console.log(tasksAsObjectArray[tasksAsObjectArray.length -1])
@@ -60,11 +62,14 @@ const renderNewTaskToTaskList = () => {
     difficultyPropertyOfTask.className = 'taskIndividualProperty'
 
     const boxForStatusCheckbox = document.createElement('div')
-    boxForStatusCheckbox.className = 'taskIndividualProperty'
+    boxForStatusCheckbox.className = 'taskIndividualProperty '
 
     const statusPropertyOfTask = document.createElement('input')
     statusPropertyOfTask.type = 'checkbox'
+    statusPropertyOfTask.dataset.id = task.id;
     statusPropertyOfTask.className = 'taskIndividualProperty'
+    
+    
 
     individualTaskElement.appendChild(idPropertyOfTask)
     individualTaskElement.appendChild(taskPropertyOfTask)
@@ -87,7 +92,7 @@ const toggleModalWindow = () => {
 // Задаем класс для задачи
 
 class Task {
-    constructor(task, priority, difficulty, id = new Date().toLocaleDateString('ru-RU')) {
+    constructor(task, priority, difficulty, id = Date.now()) {
         this.id = id;
         this.task = task;
         this.priority = priority;
@@ -106,7 +111,7 @@ const saveArrayIntoLocalStorage = () => {
 
 // По нажатию кнопки вызываем функцию сохранения массива в локальное хранилище и рендерим задачу на странцу
 
-const submitNewTaskForArray = () => {
+const submitNewTaskForArray = (event) => {
     event.preventDefault()
     const TaskInputName = document.querySelector('#TaskName')
     const priorityInput = document.querySelector('#priority')
@@ -134,14 +139,11 @@ const submitNewTaskForArray = () => {
 
 // очистка страницы от тасок из прошлой сессии 
 
-const clearTasksFromPage = () => {
-    
-}
+
 
 // рендер тасок на страницу из локального хранилища
 
 const renderTasksOnPageFromLocalStorage = () => {
-    clearTasksFromPage()
     let parsedTasksFromLocalStorage = JSON.parse(localStorage.getItem('tasks')) || []
     parsedTasksFromLocalStorage.forEach((task) => {
         let individualTaskElement = document.createElement('div')
@@ -167,29 +169,45 @@ const renderTasksOnPageFromLocalStorage = () => {
         const boxForStatusCheckbox = document.createElement('div')
         boxForStatusCheckbox.className = 'taskIndividualProperty'
 
-        const statusPropertyOfTask = document.createElement('input')
-        statusPropertyOfTask.type = 'checkbox'
-        statusPropertyOfTask.className = 'taskIndividualProperty'
-
-        individualTaskElement.appendChild(idPropertyOfTask)
-        individualTaskElement.appendChild(taskPropertyOfTask)
-        individualTaskElement.appendChild(priorityPropertyOfTask)
-        individualTaskElement.appendChild(difficultyPropertyOfTask)
-        individualTaskElement.appendChild(boxForStatusCheckbox)
-        boxForStatusCheckbox.appendChild(statusPropertyOfTask)
-        
+        if (task.completed === true) {
+            const statusPropertyOfTask = document.createElement('input')
+            statusPropertyOfTask.type = 'checkbox'
+            statusPropertyOfTask.checked = true
+            statusPropertyOfTask.dataset.id = task.id;
+            statusPropertyOfTask.className = 'taskIndividualProperty checkbox'
+            individualTaskElement.appendChild(idPropertyOfTask)
+            individualTaskElement.appendChild(taskPropertyOfTask)
+            individualTaskElement.appendChild(priorityPropertyOfTask)
+            individualTaskElement.appendChild(difficultyPropertyOfTask)
+            individualTaskElement.appendChild(boxForStatusCheckbox)
+            boxForStatusCheckbox.appendChild(statusPropertyOfTask)
+        } else {
+            const statusPropertyOfTask = document.createElement('input')
+            statusPropertyOfTask.type = 'checkbox'
+            statusPropertyOfTask.checked = false
+            statusPropertyOfTask.dataset.id = task.id;
+            statusPropertyOfTask.className = 'taskIndividualProperty checkbox'
+            individualTaskElement.appendChild(idPropertyOfTask)
+            individualTaskElement.appendChild(taskPropertyOfTask)
+            individualTaskElement.appendChild(priorityPropertyOfTask)
+            individualTaskElement.appendChild(difficultyPropertyOfTask)
+            individualTaskElement.appendChild(boxForStatusCheckbox)
+            boxForStatusCheckbox.appendChild(statusPropertyOfTask)
+        }  
     })
     
 }
  
-const removeAllTasks = () => {
-    localStorage.clear('tasks')
-    taskListElement.innerHTML = ''
-}
+
+
 
 // функции и классы выше
 
-
+taskListElement.addEventListener('change', (event) => {
+    if (event.target.classList.contains('checkbox')) {
+        event.target.checked = true
+    }
+})
 
 submitNewTaskElement.addEventListener('click', submitNewTaskForArray)
 
@@ -197,12 +215,42 @@ cancelButtonElement.addEventListener('click', toggleModalWindow)
 
 buttonElement.addEventListener('click', toggleModalWindow)
 
-deleteAllTaskButtonElement.addEventListener('click', removeAllTasks)
+document.addEventListener('click', (event) => {
+    if (event.target.classList.contains('deleteAllTasksButton')) {
+       let modalDeleteAllElement = document.querySelector('#deleteModal')
+       modalDeleteAllElement.classList.toggle('inactive')
+       modalDeleteAllElement.classList.toggle('active')
+    }
+    } 
+    
+)
+
+document.addEventListener('click', (event) => {
+    let modalDeleteAllElement = document.querySelector('#deleteModal')
+    if (event.target.id === 'confirmDelete') {
+        localStorage.clear()
+        taskListElement.innerHTML = ''
+        tasksAsObjectArray = []
+        modalDeleteAllElement.classList.toggle('inactive')
+        modalDeleteAllElement.classList.toggle('active')
+    } else if (event.target.id === 'cancelDelete') {
+        modalDeleteAllElement.classList.toggle('inactive')
+        modalDeleteAllElement.classList.toggle('active')
+    }
+
+})
+
 
 // EventListeners Выше
 
 renderTasksOnPageFromLocalStorage()
 
 
+
 // Вызов независимых функций выше
 
+// let answer = prompt('Вы действительно хотите удалить все таски? Чтобы подтвердить напишите "Да"')
+//     if (answer && answer.toLowerCase() === 'да') {
+//         taskListElement.innerHTML = ''
+//         localStorage.clear('tasks')
+//         tasksAsObjectArray = []

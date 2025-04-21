@@ -67,7 +67,9 @@ const renderNewTaskToTaskList = () => {
     const statusPropertyOfTask = document.createElement('input')
     statusPropertyOfTask.type = 'checkbox'
     statusPropertyOfTask.dataset.id = task.id;
-    statusPropertyOfTask.className = 'taskIndividualProperty'
+    statusPropertyOfTask.className = 'taskIndividualProperty checkbox'
+    
+    console.log('Сработало')
     
     
 
@@ -169,31 +171,28 @@ const renderTasksOnPageFromLocalStorage = () => {
         const boxForStatusCheckbox = document.createElement('div')
         boxForStatusCheckbox.className = 'taskIndividualProperty'
 
+        const statusPropertyOfTask = document.createElement('input')
+        statusPropertyOfTask.type = 'checkbox'
+        statusPropertyOfTask.dataset.id = task.id;
+        statusPropertyOfTask.className = 'taskIndividualProperty checkbox'
+
+        console.log('Работает')
         if (task.completed === true) {
-            const statusPropertyOfTask = document.createElement('input')
-            statusPropertyOfTask.type = 'checkbox'
             statusPropertyOfTask.checked = true
-            statusPropertyOfTask.dataset.id = task.id;
-            statusPropertyOfTask.className = 'taskIndividualProperty checkbox'
-            individualTaskElement.appendChild(idPropertyOfTask)
-            individualTaskElement.appendChild(taskPropertyOfTask)
-            individualTaskElement.appendChild(priorityPropertyOfTask)
-            individualTaskElement.appendChild(difficultyPropertyOfTask)
-            individualTaskElement.appendChild(boxForStatusCheckbox)
-            boxForStatusCheckbox.appendChild(statusPropertyOfTask)
+            
         } else {
-            const statusPropertyOfTask = document.createElement('input')
-            statusPropertyOfTask.type = 'checkbox'
             statusPropertyOfTask.checked = false
-            statusPropertyOfTask.dataset.id = task.id;
-            statusPropertyOfTask.className = 'taskIndividualProperty checkbox'
-            individualTaskElement.appendChild(idPropertyOfTask)
-            individualTaskElement.appendChild(taskPropertyOfTask)
-            individualTaskElement.appendChild(priorityPropertyOfTask)
-            individualTaskElement.appendChild(difficultyPropertyOfTask)
-            individualTaskElement.appendChild(boxForStatusCheckbox)
-            boxForStatusCheckbox.appendChild(statusPropertyOfTask)
-        }  
+        }
+            
+    
+        individualTaskElement.append(
+            idPropertyOfTask,
+            taskPropertyOfTask,
+            priorityPropertyOfTask,
+            difficultyPropertyOfTask,
+            boxForStatusCheckbox
+        )
+        boxForStatusCheckbox.appendChild(statusPropertyOfTask)
     })
     
 }
@@ -203,11 +202,7 @@ const renderTasksOnPageFromLocalStorage = () => {
 
 // функции и классы выше
 
-taskListElement.addEventListener('change', (event) => {
-    if (event.target.classList.contains('checkbox')) {
-        event.target.checked = true
-    }
-})
+
 
 submitNewTaskElement.addEventListener('click', submitNewTaskForArray)
 
@@ -241,9 +236,24 @@ document.addEventListener('click', (event) => {
 })
 
 
+taskListElement.addEventListener('change', (event) => {
+    if (event.target.classList.contains('checkbox')) {
+        const taskId = Number(event.target.dataset.id); // Получаем ID задачи
+        console.log(taskId)
+        const task = tasksAsObjectArray.find((task) => task.id === taskId); // Ищем задачу в массиве
+        if (task) {
+            console.log(taskId)
+            task.completed = event.target.checked; // Обновляем completed (true или false)
+            saveArrayIntoLocalStorage(); // Сохраняем в localStorage
+        }
+    }
+});
+
+
 // EventListeners Выше
 
 renderTasksOnPageFromLocalStorage()
+
 
 
 
@@ -254,3 +264,8 @@ renderTasksOnPageFromLocalStorage()
 //         taskListElement.innerHTML = ''
 //         localStorage.clear('tasks')
 //         tasksAsObjectArray = []
+
+
+// shortcut to log all tasks from local storage
+
+console.log(JSON.parse(localStorage.getItem('tasks')))

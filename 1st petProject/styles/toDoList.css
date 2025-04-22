@@ -149,3 +149,11 @@ button:hover {
     justify-content: space-evenly;
     
 }
+
+#confirmDelete {
+    width: 20%;
+}
+
+#cancelDelete {
+    width: 20%;
+}

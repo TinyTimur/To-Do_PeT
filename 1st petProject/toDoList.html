@@ -10,32 +10,32 @@
 <body>
     <header class="Header">
         <nav class="header__nav">
-            <h1 class="logo">Список задач</h1>
-            <button id="AddTaskButton" type="button">Создать новую задачу</button>
+            <h1 class="logo">ToDo List</h1>
+            <button id="AddTaskButton" type="button">Create New Task</button>
         </nav>    
     </header>
     
         <div id="modal" class="modal__inactive">
             <form class="modals__form">
-                <label for="TaskName">Задача:</label>
+                <label for="TaskName">Task:</label>
                 <input id="TaskName" type="text" required>
             
-                <label for="priority">Приоритет задачи:</label>
+                <label for="priority">Priority:</label>
                 <select id="priority" required>
-                    <option value="High">Высокий</option>
-                    <option value="Medium">Средний</option>
-                    <option value="Low">Низкий</option>
+                    <option value="High">High</option>
+                    <option value="Medium">Average</option>
+                    <option value="Low">Low</option>
                 </select>
 
-                <label for="difficulty">Сложность</label>
+                <label for="difficulty">Difficulty</label>
                 <select id="difficulty" required>
-                    <option value="Hard">Сложная</option>
-                    <option value="Average">Средняя</option>
-                    <option value="Easy">Лёгкая</option>
+                    <option value="Hard">Hard</option>
+                    <option value="Average">Medium</option>
+                    <option value="Easy">Easy</option>
                 </select>
 
-                <button id="submitNewTask" type="submit">Подтвердить</button>
-                <button id="turnModalInactive" type="button">Отменить</button>
+                <button id="submitNewTask" type="submit">Confirm</button>
+                <button id="turnModalInactive" type="button">Cancel</button>
             </form>
         </div>
     <main class="taskField">
@@ -49,12 +49,14 @@
        <div class="taskList">
         
        </div>
-       <button class="deleteAllTasksButton" id="removeAllTasks">Удалить все задачи</button>
+       <button class="deleteAllTasksButton" id="removeAllTasks">Delete All Tasks</button>
        <div id="deleteModal" class="modal inactive">
         <div class="modal-content">
-            <p>Вы действительно хотите удалить все задачи?</p>
-            <button id="confirmDelete">Да</button>
-            <button id="cancelDelete">Нет</button>
+            <p>Are yoy sure you want to delete all current tasks?</p>
+            <div class="modal-content--confimationButtons">
+            <button id="confirmDelete">Yes</button>
+            <button id="cancelDelete">No</button>
+            </div>
         </div>
     </div>
        

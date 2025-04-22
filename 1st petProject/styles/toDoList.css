@@ -16,6 +16,10 @@
 
 /* Buttons */
 
+.deleteAllTasksButton {
+    margin-top: 2%;
+}
+
 button {
     background-color: rgb(189, 180, 198);
     align-self: center;
@@ -133,4 +137,15 @@ button:hover {
     display: flex;
     flex-direction: column;
     row-gap: 5px;
+}
+
+.modal-content {
+    margin-top: 2%;
+}
+
+.modal-content--confimationButtons {
+    padding-top: 2%;
+    display: flex;
+    justify-content: space-evenly;
+    
 }
